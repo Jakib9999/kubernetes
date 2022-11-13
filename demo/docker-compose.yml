@@ -1,0 +1,30 @@
+
+version: "3.8"
+services:
+  backend:
+    build: .
+    volumes:
+      - .:/project
+    ports:
+      - 8888:8000
+    image: backend
+    container_name: web
+    command: python manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - db
+
+
+  db:
+
+    image: mariadb
+    container_name: back
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    volumes:
+      - ./data:/var/lib/mysql
+        #ports:
+      #- "3307:3306"
+
